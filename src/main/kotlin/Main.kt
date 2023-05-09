@@ -1,3 +1,5 @@
+import jdk.jshell.Snippet.Status
+
 /* ARQUIVO ESTUDO
 * .Projeto destinado ao estudo e prática da Linguágem de Programação Kotlin*/
 
@@ -12,6 +14,7 @@ linguagem oficial do sistema Android.*/
 fun main() {
 
     //----- PARTE 1 ----- Variáveis Mutáveis e Imutáveis
+    println("Variáveis Mutáveis e Imutáveis")
 
     //Uma variável é mutável quando declarada com "var"
     var var1 = "Variável v1 de Valor 1"
@@ -27,7 +30,8 @@ fun main() {
     println("----------------------------------------------------------------------------------")
     println()
 
-    //----- PARTE 2 ----- Tipos de Variáveis
+    //----- PARTE 2 ----- Tipos Primitivos de Variáveis
+    println("Tipos Primitivos de Variáveis")
 
     //Char -> Caractére único
     /*Uma variável do tipo Caractére é declarada por "Char", por ''(aspas simples)
@@ -42,10 +46,10 @@ fun main() {
     //String -> Textos
     /*Uma variável do tipo string é declarada por "String", por ""(aspas duplas)
     * e pode conter 1 ou mais palavras ou 1 frase ou texto.*/
-    var s1 = "Palavra 1"
-    var s2 = "Frase de exemplo declarada como String"
+    var st1 = "Palavra 1"
+    var st2 = "Frase de exemplo declarada como String"
     println("- String -")
-    println("s1: $s1 \ns2: $s2")
+    println("st1: $st1 \nst2: $st2")
 
     println()
 
@@ -113,6 +117,7 @@ fun main() {
     println()
 
     //----- PARTE 3 ----- Declaração de Arrays (Tipos de Arrays e Listas)
+    println("Declaração de Arrays (Tipos de Arrays e Listas)")
 
     /*Arrays são variáveis que podem armazenar uma lista ordenada e organizada de valores
     * através de Índices, sendo que podem ser declaradas como:*/
@@ -166,6 +171,7 @@ fun main() {
     println()
 
     //----- PARTE 4 ----- Estruturas Condicionais (Loops)
+    println("Estruturas Condicionais (Loops)")
 
     /*if else -> É uma Estrutura Condicional que testa se uma variável é VERDADEIRA
     * ou FALSA. Tem como entrada uma Variável, testa uma Condição, e a Saída é feita
@@ -276,4 +282,130 @@ fun main() {
     println("\n")
     println("----------------------------------------------------------------------------------")
     println()
+
+    //----- PARTE 5 ----- SET / MAP / ENUM
+
+    /* hashSetOf (set) -> A Estrutura "set" é do tipo lista, a qual é mais rápido
+    * do que um ArrayList. "hashSetOf" não permite itens duplicados e não mantém
+    * a ordem dos elementos.*/
+    println("- hashSetOf -")
+    var se1 = hashSetOf("A", "B", "C", "C", "D", "C", "D", "H", "I", "I")
+    print("se1:")
+    for (sc1 in se1) { print(" $sc1")
+    }
+
+    println()
+
+    var se2 = hashSetOf(10, 20, 30, 40, 50, 60, 70)
+    print("se2:")
+    for (sc2 in se2) { print(" $sc2") }
+
+    println("\n")
+
+    println("   ---------------------------------------      ")
+
+    println("\n- hashMapOf -")
+    /*hashMapOf (map) / (chave / valor) -> A Estrutura "map" é uma implementação
+    * chave / valor.
+    * É possível adicionar (chave/valor) através do método "put".
+    * É possível ter como saída apenas a chave por "[varMap].values" ou apenas o valor por
+    * "keys".
+    * É possível remover itens por "[varMap].remove"*/
+    var m1 = hashMapOf(
+        "urso" to "Animal que hiberna",
+        "cao" to "Melhor amigo do Homem"
+    )
+    m1.put("passaro", "Gosta de voar")
+    m1.remove("urso")
+
+    //Exibindo map [m1]
+    print("\n- Chave / Valor -\n")
+    for (item in m1) { println(". $item") }
+    //Exibindo map [m1].values
+    print("\n- Chave (map.keys) -\n")
+    for (item in m1.keys) { println(". $item") }
+    //Exibindo map [m1].keys
+    print("\n- Chave (map.values) -\n")
+    for (item in m1.values) { println(". $item") }
+
+    println()
+
+    println("   ---------------------------------------      ")
+
+    /*enum -> É um tipo de dados que consiste num conjunto de constantes que são
+    * pré-declaradas para serem utilizadas como valores fixos*/
+    val pedido = Pedido()
+
+    println("\n- enum -")
+    if (pedido.status == StatusPedido.PROCESSANDO) {
+        println("O pedido está Processando!")
+    } else if (pedido.status == StatusPedido.APROVADO) {
+        println("O pedido foi Aprovado!")
+    } else if (pedido.status == StatusPedido.REPROVADO) {
+        println("O pedido foi Reprovado!")
+    }
+
+    println("\n")
+    println("----------------------------------------------------------------------------------")
+    println()
+
+    //----- PARTE 6 ----- INTERFACE / CLASS / : (EXTENDS) / IMPLEMENTS ???
+    println("\n- interface -")
+
+    val jamilton = Jamilton()
+    jamilton.direitosDeveres() //classe
+    jamilton.ganharEleicao() //interface (override obrigatório)
+
+    val obama = Obama()
+    obama.direitosDeveres() //classe
+    obama.ganharEleicao() //interface (override obrigatório)
+    obama.temFilho() //interface (override obrigatório)
 }
+
+/*-------------------------------------------------------------------------*/
+
+/*enum - início*/
+enum class StatusPedido() {
+    PROCESSANDO, REPROVADO, APROVADO
+}
+
+class Pedido() {
+    var status: StatusPedido = StatusPedido.PROCESSANDO
+}
+/*enum - final*/
+
+/*-------------------------------------------------------------------------*/
+
+/*interface - início*/
+interface Presidente {
+    fun ganharEleicao()
+}
+
+open class Cidadao {
+    fun direitosDeveres() {
+        println("Todo cidadão tem direitos e deveres!")
+    }
+}
+
+interface Pai {
+    fun temFilho()
+}
+
+class Obama: Cidadao(), Presidente, Pai {
+    override fun ganharEleicao() {
+        println("Ganhar Eleição nos EUA")
+    }
+
+    override fun temFilho() {
+        println("Obama tem filhos")
+    }
+}
+
+class Jamilton: Cidadao(), Presidente {
+    override fun ganharEleicao() {
+        println("Ganhar Eleição no Brasil")
+    }
+}
+
+
+/*interface - final*/
