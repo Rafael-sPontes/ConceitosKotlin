@@ -406,6 +406,4 @@ class Jamilton: Cidadao(), Presidente {
         println("Ganhar Eleição no Brasil")
     }
 }
-
-
 /*interface - final*/
